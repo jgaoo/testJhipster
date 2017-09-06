@@ -1,0 +1,51 @@
+entity Device {
+id Long
+}
+
+entity User {
+id Long
+}
+
+entity MasterAgreement {
+id Long
+}
+
+entity Agreement {
+id Long
+}
+
+entity SIMCard {
+id Long
+}
+
+entity Tariff {
+id Long
+}
+
+enum Test {
+    ONE, TWO, THREE
+}
+
+
+relationship OneToMany {
+    User{device} to Device,
+    MasterAgreement{agreement} to Agreement,
+    Agreement{simCard} to SIMCard,
+    MasterAgreement{tariff} to Tariff,
+    Agreement{device} to Device
+}
+
+relationship ManyToOne {
+    Agreement{tariff} to Tariff
+}
+
+// Set pagination options
+paginate User, Device with infinite-scroll
+paginate Agreement with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except User, Tariff
+// Set an angular suffix
+angularSuffix * with mySuffix
